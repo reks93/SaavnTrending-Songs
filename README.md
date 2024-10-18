@@ -1,25 +1,29 @@
-# SaavnTrending-Songs
+# Saavn Trending Songs
 Build a system that keeps the users notified about new releases based on their music preferences
-Saavn Trending Songs – Map reduce AssignmentAlgorithm
-Classes in the Project:
+
+Saavn Trending Songs – Using Map reduce Algorithm
+
+**Classes in the Project:**
+
 1. Saavndriver.java - Main driver class for the job
 2. Saavnmapper.java – The Mapper class
 3. Saavnreducer.java – The Reducer Class
 4. SaavnCombiner – The Combiner Class
 5. SaavnPartitioner – The Partitioner Class
-Mapper :
+
+**Mapper :**
 Key : Song id
 Value : date
 Input file is split by “,” and storing the line in a String array.
 Songid is retrieved from the array[0] and date is retrieved by further splitting with "-".
 Length of the songid is checked to be greater than 7 to exclude the (null) values present in song id.
-Combiner:
+**Combiner:**
 Key : Song id
 Value : {sum of the song ids}
 I have implemented the combiner class separately by setting
 job.setCombinerClass(SaavnCombiner.class) in the driver class to use the input and group together to
 reduce the communication cost.
-Reducer:
+**Reducer:**
 Key : Song id
 Value : Total number of song streaming for that particular day
 Counts the number of values associated with a key songid date.
@@ -28,7 +32,7 @@ writes the output to the file with count for each day w.r.t the songid/day. I ha
 to get the output files per day from 1st to 31st Dec because of the huge size of the file. I have not set the no
 of reducers in the driver class but passing it manually through the command prompt with -D
 mapreduce.job.reduces=31
-Partitioner:
+**Partitioner:**
 Implemented the partitioner in such a way that it outputs the songid and count in a file for each day from
 1
 st to 31st Dec. It gets the day from the Mapper and once the day is validated with the Hash Map , the
